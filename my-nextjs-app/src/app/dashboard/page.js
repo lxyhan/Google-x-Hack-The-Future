@@ -352,7 +352,6 @@ const checkLocalStorage = () => {
                     formatDate={formatDate}
                     showRuleOutcome={!!activeRule}
                   />
-                  // In your component's JSX (for temporary testing)
 <button 
   onClick={checkLocalStorage}
   className="px-4 py-2 bg-blue-600 text-white rounded-md"
