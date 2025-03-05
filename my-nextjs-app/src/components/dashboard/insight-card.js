@@ -1,37 +1,80 @@
 'use client'
 
-import { TrendingUp, AlertTriangle, Package, ShoppingBag } from 'lucide-react'
+import { TrendingUp, AlertTriangle, Package, ShoppingBag, ArrowRight } from 'lucide-react'
 
 export default function InsightCard({ insight }) {
-  const priorities = {
-    'High': 'bg-red-50 border-red-200 text-red-700',
-    'Medium': 'bg-yellow-50 border-yellow-200 text-yellow-700',
-    'Low': 'bg-blue-50 border-blue-200 text-blue-700'
+  // Modern style configurations based on insight type (focusing on type rather than priority)
+  const typeStyles = {
+    'trend': {
+      icon: <TrendingUp className="h-5 w-5 text-white" />,
+      iconBg: 'bg-blue-500',
+      gradientBg: 'bg-gradient-to-br from-blue-50 to-blue-100',
+      accentColor: 'bg-blue-500',
+      textColor: 'text-blue-700',
+      lightTextColor: 'text-blue-500'
+    },
+    'fraud': {
+      icon: <AlertTriangle className="h-5 w-5 text-white" />,
+      iconBg: 'bg-red-500',
+      gradientBg: 'bg-gradient-to-br from-red-50 to-red-100',
+      accentColor: 'bg-red-500',
+      textColor: 'text-red-700',
+      lightTextColor: 'text-red-500'
+    },
+    'inventory': {
+      icon: <Package className="h-5 w-5 text-white" />,
+      iconBg: 'bg-purple-500',
+      gradientBg: 'bg-gradient-to-br from-purple-50 to-purple-100',
+      accentColor: 'bg-purple-500',
+      textColor: 'text-purple-700',
+      lightTextColor: 'text-purple-500'
+    },
+    'customer': {
+      icon: <ShoppingBag className="h-5 w-5 text-white" />,
+      iconBg: 'bg-green-500',
+      gradientBg: 'bg-gradient-to-br from-green-50 to-green-100',
+      accentColor: 'bg-green-500',
+      textColor: 'text-green-700',
+      lightTextColor: 'text-green-500'
+    }
   };
   
-  const types = {
-    'trend': <TrendingUp className="h-5 w-5 text-blue-500" />,
-    'fraud': <AlertTriangle className="h-5 w-5 text-red-500" />,
-    'inventory': <Package className="h-5 w-5 text-purple-500" />,
-    'customer': <ShoppingBag className="h-5 w-5 text-green-500" />
+  // Priority badge styling
+  const priorityBadges = {
+    'High': 'bg-red-100 text-red-800',
+    'Medium': 'bg-amber-100 text-amber-800',
+    'Low': 'bg-blue-100 text-blue-800'
   };
   
-  const priorityClass = priorities[insight.priority] || priorities['Medium'];
+  const style = typeStyles[insight.type] || typeStyles['trend'];
+  const priorityBadge = priorityBadges[insight.priority] || priorityBadges['Medium'];
   
   return (
-    <div className={`p-4 border rounded-lg ${priorityClass} shadow-sm`}>
-      <div className="flex items-start justify-between">
-        <div className="flex items-center space-x-2">
-          {types[insight.type]}
-          <h3 className="font-medium">{insight.title}</h3>
+    <div className="bg-white rounded-lg shadow-sm border border-stone-200 overflow-hidden hover:shadow-md transition-shadow duration-200">
+      <div className="flex items-start">
+        {/* Left icon column */}
+        <div className={`${style.iconBg} p-4 flex items-center justify-center`}>
+          {style.icon}
         </div>
-        <span className="text-xs font-medium px-2 py-1 rounded-full bg-white bg-opacity-50">
-          {insight.priority} Priority
-        </span>
-      </div>
-      <p className="mt-2 text-sm">{insight.description}</p>
-      <div className="mt-3 text-xs">
-        <p className="font-medium">Potential Impact: {insight.potentialImpact}</p>
+        
+        {/* Content area */}
+        <div className="flex-1 p-4">
+          <div className="flex items-start justify-between">
+            <h3 className="font-semibold text-stone-800">{insight.title}</h3>
+            <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${priorityBadge}`}>
+              {insight.priority}
+            </span>
+          </div>
+          
+          <p className="mt-2 text-sm text-stone-600">{insight.description}</p>
+          
+          <div className="mt-3 flex justify-between items-center">
+            <span className="text-xs font-medium text-stone-500">Impact: <span className={`font-bold ${style.textColor}`}>{insight.potentialImpact}</span></span>
+            <button className={`text-xs flex items-center ${style.lightTextColor} font-medium hover:underline`}>
+              View Details <ArrowRight className="ml-1 h-3 w-3" />
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
