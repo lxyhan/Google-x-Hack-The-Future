@@ -108,10 +108,10 @@ export default function EnterpriseRules() {
       alert("There's nothing to export. Please create a rule flow first.");
       return;
     }
-    
+  
     // Create and export rule definition
     const ruleDefinition = createRuleDefinition(activeRuleFlow);
-    
+  
     // Convert to JSON and create a downloadable file
     const jsonString = JSON.stringify(ruleDefinition, null, 2);
     const blob = new Blob([jsonString], { type: 'application/json' });
@@ -123,10 +123,11 @@ export default function EnterpriseRules() {
     link.click();
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
-    
+  
     // Show success message
     alert(`Rule "${activeRuleFlow}" has been exported successfully!`);
-  }, [nodes, edges, activeRuleFlow]);
+  }, [nodes, edges, activeRuleFlow]);  // <-- Add nodes and edges as dependencies
+  
 
   // Handle running/testing the rule
   const handleRunRule = useCallback(() => {
@@ -255,7 +256,7 @@ Your return processing rule has been validated and is ready to use.
                 
                 {/* Help text for connecting blocks */}
                 <div className="mt-2 bg-blue-50 p-2 rounded text-sm text-blue-700 border border-blue-100">
-                  <p><strong>How to use:</strong> Drag blocks from the left panel onto the canvas. Connect blocks by dragging from the handles (circles) on one block to another. Condition blocks have "Yes" and "No" outputs to create different paths.</p>
+                  <p><strong>How to use:</strong> Drag blocks from the left panel onto the canvas. Connect blocks by dragging from the handles (circles) on one block to another. Condition blocks have Yes and No outputs to create different paths.</p>
                 </div>
               </div>
               
