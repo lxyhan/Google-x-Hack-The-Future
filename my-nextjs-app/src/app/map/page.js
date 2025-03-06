@@ -10,6 +10,7 @@ import {
 import Sidebar from '../../components/sidebar'
 import MobileSidebar from '../../components/mobileSidebar'
 import Topbar from '../../components/topbar'
+import LogisticsMapContent from '../../components/MapComponenets/logisticsmapcontent'
 
 const navigation = [
   { name: 'Returns Dashboard', href: '#', icon: Home, current: false, id: 'dashboard' },
@@ -55,11 +56,8 @@ export default function LogisticsMap() {
 
           <main className="py-10">
             <div className="px-4 sm:px-6 lg:px-8">
-              {/* Map-specific content */}
-              <div className="p-4">
-                <h1 className="text-2xl font-bold">Logistics Map Content</h1>
-                <p className="mt-4 text-stone-600">This is where the logistics map content will be displayed.</p>
-              </div>
+              {/* Map content component */}
+              <LogisticsMapContent />
             </div>
           </main>
         </div>

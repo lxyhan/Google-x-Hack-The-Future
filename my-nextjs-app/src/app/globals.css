@@ -69,3 +69,4 @@ a, button, [role="button"], input, textarea, select, [tabindex]:not([tabindex="-
 .custom-cursor.hover {
   animation: cursorPulse 1.2s infinite;
 }
+

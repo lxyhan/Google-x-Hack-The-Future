@@ -20,6 +20,7 @@ export default function InsightCard({ insight }) {
       accentColor: 'bg-red-500',
       textColor: 'text-red-700',
       lightTextColor: 'text-red-500'
+
     },
     'inventory': {
       icon: <Package className="h-5 w-5 text-white" />,
@@ -75,6 +76,7 @@ export default function InsightCard({ insight }) {
             </button>
           </div>
         </div>
+
       </div>
     </div>
   );
