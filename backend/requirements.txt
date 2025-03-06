@@ -1,0 +1,9 @@
+fastapi
+google-cloud-aiplatform
+pillow
+python-multipart
+firebase-admin
+google-generativeai
+pytest
+python-dotenv
+pydantic_settings
