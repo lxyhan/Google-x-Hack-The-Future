@@ -7,3 +7,9 @@ google-generativeai
 pytest
 python-dotenv
 pydantic_settings
+speechrecognition==3.8.1  # For speech recognition
+pyttsx3==2.90  # For offline text-to-speech
+gTTS==2.3.0  # Google Text-to-Speech
+playsound==1.2.2  # To play the mp3 files
+SpeechRecognition
+pyaudio
