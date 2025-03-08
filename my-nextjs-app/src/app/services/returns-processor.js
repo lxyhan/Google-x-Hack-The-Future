@@ -45,7 +45,7 @@ export async function processReturnsWithRule(ruleDefinition) {
         autoProcessed: result.isComplete,
         // Update the return status and next actions based on rule result
         status: mapRuleResultToStatus(result.result, returnItem.status),
-        nextAction: mapRuleResultToNextAction(result.result, returnItem.nextAction)
+        nextAction: mapRuleResultToNextAction(result.result, returnItem.nextAction, returnItem)
       };
     } catch (error) {
       console.error(`Error processing return ${returnItem.id}:`, error);
@@ -87,13 +87,22 @@ function mapRuleResultToStatus(ruleResult, currentStatus) {
 /**
  * Maps a rule result to a next action
  */
-function mapRuleResultToNextAction(ruleResult, currentNextAction) {
+/**
+ * Maps a rule result to a next action
+ */
+function mapRuleResultToNextAction(ruleResult, currentNextAction, returnItem) {
   if (ruleResult.startsWith('OUTCOME_')) {
     return ruleResult.replace('OUTCOME_', '');
   }
   
   switch (ruleResult) {
     case 'APPROVED':
+      // Check the condition and assign to Resale or Refund Process based on condition
+      if (returnItem && returnItem.items && returnItem.items[0] && 
+          (returnItem.items[0].condition === 'Like New' || 
+           returnItem.items[0].condition?.includes('New'))) {
+        return 'Resale';
+      }
       return 'Refund Process';
     case 'REJECTED':
       return 'Return to Customer';
