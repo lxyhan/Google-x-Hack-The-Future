@@ -9,7 +9,6 @@ load_dotenv(env_path)
 class Settings(BaseSettings):
     GOOGLE_API_KEY: str
     FIREBASE_CREDENTIALS: str
-    GOOGLE_APPLICATION_CREDENTIALS: str
     MODEL_NAME: str = "gemini-2.0-flash"
     
     # AI Model parameters
@@ -35,4 +34,3 @@ settings = Settings()
 # Debug: Check if variables are loaded correctly
 print("GOOGLE_API_KEY:", settings.GOOGLE_API_KEY)
 print("FIREBASE_CREDENTIALS:", settings.FIREBASE_CREDENTIALS)
-print("GOOGLE_APPLICATION_CREDENTIALS:", settings.GOOGLE_APPLICATION_CREDENTIALS)

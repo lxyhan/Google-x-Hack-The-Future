@@ -1,11 +1,18 @@
 import firebase_admin
 from firebase_admin import credentials, firestore
 from datetime import datetime
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
 
 class FirebaseClient:
     def __init__(self):
         if not firebase_admin._apps:
-            cred = credentials.Certificate("FIREBASE_CREDENTIALS")
+            firebase_credentials = os.getenv("FIREBASE_CREDENTIALS")
+            if not firebase_credentials:
+                raise Exception("FIREBASE_CREDENTIALS environment variable not set")
+            cred = credentials.Certificate(firebase_credentials)
             firebase_admin.initialize_app(cred)
         self.db = firestore.client()
 

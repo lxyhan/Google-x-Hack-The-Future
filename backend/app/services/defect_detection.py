@@ -11,16 +11,19 @@ class DefectDetectionService:
         Uses AI to analyze the image and determine the product category.
         """
         prompt = """
-        Identify the product category from this image. Examples include:
-        - Electronics (Laptop, Smartphone, Headphones)
-        - Apparel (Shirt, Shoes, Jacket)
-        - Furniture (Chair, Table, Sofa)
-        - Accessories (Watch, Bag, Sunglasses)
-        - Home Appliances (Microwave, Blender, Vacuum)
+        Identify the specific type of apparel from this image. Examples include:
+        - Shirt
+        - Shoes
+        - Jacket
+        - Pants
+        - Dress
+        - Hat
+        - Sweater
+        - Skirt
 
         Return the result in JSON format:
         {
-            "product_category": "identified_category"
+            "product_category": "identified_type"
         }
         """
 
@@ -36,27 +39,46 @@ class DefectDetectionService:
         product_category = await self.identify_product_category(image)
 
         prompt = f"""
-        Analyze this image of a {product_category} product and:
-        1. Identify any visible defects (scratches, tears, missing parts).
-        2. Assess its overall condition, considering:
-            - Wear and tear
-            - Functionality
-            - Cosmetic condition
-            - Market value impact
-        3. Grade the condition as one of the following: Like New, Used - Good, Salvage.
-        4. Provide a confidence score for the condition grade.
-        5. Estimate the percentage of value retention (0-100).
-        6. Recommend a course of action: Restock, Repair, Liquidate, Recycle.
+        Analyze this image of a {product_category} product and perform the following assessments:
+
+        1. Identify any visible defects, such as:
+        - Scratches, stains, discoloration
+        - Tears, holes, missing parts
+        - Broken zippers, buttons, laces, or other functional damage
+
+        2. Assess the overall condition, considering:
+        - Wear and tear (Is the fabric stretched, faded, or heavily used?)
+        - Functionality (Are zippers, buttons, and fasteners intact and working?)
+        - Cosmetic condition (Does it look new, slightly worn, or heavily damaged?)
+        - Market value impact (How do these factors affect resale potential?)
+
+        3. Grade the condition as one of the following:
+        - Like New: No visible defects, minimal signs of wear, fully functional.
+        - Used - Good: Minor defects (e.g., light stains, small scratches), but still wearable/usable.
+        - Salvage: Major defects (e.g., large tears, missing parts), significantly reducing usability.
+
+        4. Provide a confidence score (0.0-1.0) for the condition grade.
+
+        5. Estimate the percentage of value retention (0-100), considering its resale market.
+
+        6. Recommend a course of action based on condition:
+        - Resell: If the item is Like New or Used - Good, with high market value.
+        - Refurbish: If the item has repairable defects (e.g., missing buttons, minor tears).
+        - Donate: If the item is used but still wearable but has low resale value.
+        - Recycle: If the item is too damaged for use but can be broken down (e.g., fabric recycling).
+        - Repurpose: If the item cannot be worn but can be converted into another product (e.g., fabric for crafts).
+        - Compost: If the item is fully biodegradable and no longer usable.
+        - Disposal: If the item is severely damaged, non-recyclable, and cannot be repurposed.
 
         Return the results in JSON format:
         {{
             "product_category": "{product_category}",
             "defects": ["list of defects found"],
-            "condition_grade": "grade",
+            "condition_grade": "Like New|Used - Good|Salvage",
             "confidence_score": 0.0-1.0,
             "condition_details": ["list of condition observations"],
             "estimated_value_retention": 0-100,
-            "recommended_action": "Restock|Repair|Liquidate|Recycle"
+            "recommended_action": "Resell|Refurbish|Donate|Recycle|Repurpose|Compost|Disposal"
         }}
         """
         
